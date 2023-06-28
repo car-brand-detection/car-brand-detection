@@ -1,0 +1,412 @@
+make,model,make
+Acura,ILX,24
+Acura,MDX,26
+Acura,RDX,9
+Acura,RLX,3
+Acura,TL,35
+Acura,TLX,4
+Acura,TSX,18
+Acura,TSX Sport Wagon,2
+Acura,ZDX,2
+Audi,A3,11
+Audi,A3 Sportback e-tron,1
+Audi,A4,16
+Audi,A5,9
+Audi,A6,16
+Audi,A7,2
+Audi,A8,3
+Audi,A8 L,2
+Audi,Allroad,2
+Audi,Q3,2
+Audi,Q5,11
+Audi,Q7,7
+Audi,RS 5,1
+Audi,S3,1
+Audi,S4,3
+Audi,S5,3
+Audi,SQ5,2
+Audi,TT,2
+Audi,TT RS,1
+Audi,TTS,2
+BMW,1 Series,9
+BMW,2 Series,3
+BMW,3 Series,65
+BMW,4 Series,8
+BMW,5 Series,28
+BMW,6 Series,4
+BMW,7 Series,4
+BMW,M3,2
+BMW,M6,1
+BMW,X1,25
+BMW,X3,12
+BMW,X4,2
+BMW,X5,13
+BMW,X5 M,1
+BMW,X6,3
+BMW,Z4,4
+BMW,i3,4
+Buick,Enclave,36
+Buick,Encore,24
+Buick,LaCrosse,29
+Buick,Lucerne,2
+Buick,Regal,26
+Buick,Verano,68
+Cadillac,ATS,48
+Cadillac,CTS,35
+Cadillac,CTS-V,2
+Cadillac,DTS,1
+Cadillac,ELR,2
+Cadillac,Escalade,4
+Cadillac,Escalade ESV,4
+Cadillac,SRX,53
+Cadillac,XT5,1
+Cadillac,XTS,7
+Chevrolet,Avalanche,3
+Chevrolet,Aveo,1
+Chevrolet,Black Diamond Avalanche,1
+Chevrolet,Camaro,67
+Chevrolet,Captiva Sport,6
+Chevrolet,Captiva Sport Fleet,1
+Chevrolet,Cobalt,2
+Chevrolet,Colorado,2
+Chevrolet,Corvette,3
+Chevrolet,Cruze,80
+Chevrolet,Cruze Limited,3
+Chevrolet,Equinox,69
+Chevrolet,Express Cargo,1
+Chevrolet,Impala,35
+Chevrolet,Impala Limited,12
+Chevrolet,Malibu,60
+Chevrolet,Malibu Limited,3
+Chevrolet,SS,2
+Chevrolet,Silverado 1500,26
+Chevrolet,Silverado 2500HD,2
+Chevrolet,Sonic,48
+Chevrolet,Spark,23
+Chevrolet,Spark EV,2
+Chevrolet,Suburban,9
+Chevrolet,Tahoe,12
+Chevrolet,Tahoe Hybrid,1
+Chevrolet,Traverse,23
+Chevrolet,Trax,7
+Chevrolet,Volt,66
+Chrysler,200,42
+Chrysler,200 Convertible,2
+Chrysler,300,40
+Chrysler,Town and Country,63
+Dodge,Avenger,12
+Dodge,Caliber,2
+Dodge,Challenger,46
+Dodge,Charger,44
+Dodge,Dart,18
+Dodge,Durango,19
+Dodge,Grand Caravan,22
+Dodge,Journey,34
+Dodge,Nitro,2
+Dodge,Ram Pickup 1500,2
+Dodge,Ram Pickup 2500,1
+FIAT,500,36
+FIAT,500L,15
+FIAT,500X,5
+FIAT,500c,5
+FIAT,500e,13
+Ford,C-MAX Energi,16
+Ford,C-MAX Hybrid,12
+Ford,Edge,35
+Ford,Escape,59
+Ford,Expedition,10
+Ford,Expedition EL,6
+Ford,Explorer,34
+Ford,F-150,48
+Ford,F-250 Super Duty,2
+Ford,F-350 Super Duty,2
+Ford,Fiesta,68
+Ford,Flex,19
+Ford,Focus,64
+Ford,Fusion,109
+Ford,Fusion Energi,12
+Ford,Fusion Hybrid,19
+Ford,Mustang,32
+Ford,Ranger,2
+Ford,Shelby GT500,2
+Ford,Taurus,26
+GMC,Acadia,39
+GMC,Canyon,2
+GMC,Sierra 1500,15
+GMC,Terrain,110
+GMC,Yukon,5
+GMC,Yukon XL,3
+Honda,Accord,161
+Honda,Accord Crosstour,3
+Honda,Accord Hybrid,4
+Honda,Accord Plug-In,2
+Honda,CR-V,90
+Honda,CR-Z,6
+Honda,Civic,219
+Honda,Crosstour,15
+Honda,Element,2
+Honda,Fit,23
+Honda,HR-V,2
+Honda,Insight,2
+Honda,Odyssey,31
+Honda,Pilot,10
+Honda,Ridgeline,2
+Hyundai,Accent,49
+Hyundai,Azera,3
+Hyundai,Elantra,104
+Hyundai,Elantra Coupe,6
+Hyundai,Elantra GT,13
+Hyundai,Elantra Touring,2
+Hyundai,Entourage,1
+Hyundai,Equus,2
+Hyundai,Genesis,19
+Hyundai,Genesis Coupe,9
+Hyundai,Santa Fe,8
+Hyundai,Santa Fe Sport,28
+Hyundai,Sonata,78
+Hyundai,Sonata Hybrid,21
+Hyundai,Sonata Plug-in Hybrid,1
+Hyundai,Tucson,26
+Hyundai,Veloster,10
+Hyundai,Veloster Turbo,10
+Hyundai,Veracruz,3
+INFINITI,EX35,2
+INFINITI,EX37,2
+INFINITI,FX35,2
+INFINITI,FX37,2
+INFINITI,G Coupe,2
+INFINITI,G25 Sedan,2
+INFINITI,G35,2
+INFINITI,G37,1
+INFINITI,G37 Convertible,4
+INFINITI,G37 Coupe,3
+INFINITI,G37 Sedan,5
+INFINITI,JX35,4
+INFINITI,M35,1
+INFINITI,M35h,2
+INFINITI,M37,3
+INFINITI,M56,1
+INFINITI,Q40,2
+INFINITI,Q50,13
+INFINITI,Q50 Hybrid,3
+INFINITI,Q60 Convertible,2
+INFINITI,Q60 Coupe,3
+INFINITI,Q70,2
+INFINITI,Q70 Hybrid,1
+INFINITI,Q70L,2
+INFINITI,QX50,2
+INFINITI,QX56,2
+INFINITI,QX60,2
+INFINITI,QX60 Hybrid,2
+INFINITI,QX70,2
+INFINITI,QX80,3
+Infiniti,FX37,2
+Infiniti,G25 Sedan,1
+Infiniti,G37 Convertible,1
+Infiniti,G37 Coupe,7
+Infiniti,G37 Sedan,41
+Infiniti,JX35,5
+Infiniti,M37,2
+Infiniti,Q50,9
+Infiniti,Q60 Coupe,3
+Infiniti,QX56,4
+Infiniti,QX60,4
+Infiniti,QX70,1
+Jaguar,F-TYPE,1
+Jaguar,XF,11
+Jaguar,XJ,3
+Jaguar,XJL,2
+Jaguar,XK,2
+Jeep,Cherokee,34
+Jeep,Compass,40
+Jeep,Grand Cherokee,31
+Jeep,Liberty,4
+Jeep,Patriot,45
+Jeep,Renegade,17
+Jeep,Wrangler,13
+Jeep,Wrangler Unlimited,18
+Kia,Cadenza,22
+Kia,Forte,38
+Kia,Forte Koup,5
+Kia,Forte5,5
+Kia,K900,3
+Kia,Optima,74
+Kia,Optima Hybrid,14
+Kia,Rio,16
+Kia,Rio5,9
+Kia,Rondo,1
+Kia,Sedona,16
+Kia,Sorento,56
+Kia,Soul,110
+Kia,Soul EV,1
+Kia,Spectra,1
+Kia,Sportage,21
+Land Rover,Discovery Sport,2
+Land Rover,LR2,3
+Land Rover,LR4,3
+Land Rover,Range Rover,3
+Land Rover,Range Rover Evoque,5
+Land Rover,Range Rover Evoque Coupe,2
+Land Rover,Range Rover Sport,5
+Lexus,CT 200h,52
+Lexus,ES 300h,6
+Lexus,ES 350,34
+Lexus,GS 200t,1
+Lexus,GS 300,1
+Lexus,GS 350,14
+Lexus,GS 450h,2
+Lexus,GX 460,5
+Lexus,HS 250h,2
+Lexus,IS 200t,2
+Lexus,IS 250,8
+Lexus,IS 250C,3
+Lexus,IS 300,1
+Lexus,IS 350,4
+Lexus,IS 350C,2
+Lexus,LS 460,3
+Lexus,LX 570,2
+Lexus,NX 200t,7
+Lexus,NX 300h,3
+Lexus,RC 200t,1
+Lexus,RC 300,2
+Lexus,RC 350,3
+Lexus,RX 350,31
+Lexus,RX 450h,3
+Lexus,SC 430,2
+Lincoln,MKC,4
+Lincoln,MKS,7
+Lincoln,MKT,2
+Lincoln,MKX,8
+Lincoln,MKZ,13
+Lincoln,MKZ Hybrid,7
+Lincoln,Navigator,2
+Lincoln,Navigator L,2
+Lincoln,Town Car,1
+MINI,Clubman,7
+MINI,Convertible,3
+MINI,Cooper,2
+MINI,Cooper Clubman,3
+MINI,Cooper Convertible,2
+MINI,Cooper Countryman,3
+MINI,Cooper Coupe,2
+MINI,Cooper Hardtop,3
+MINI,Countryman,11
+MINI,Coupe,3
+MINI,Hardtop,20
+MINI,Paceman,7
+MINI,Roadster,3
+Maserati,Ghibli,1
+Mazda,CX-3,1
+Mazda,CX-5,12
+Mazda,CX-7,3
+Mazda,CX-9,27
+Mazda,MAZDA3,26
+Mazda,MAZDA5,6
+Mazda,MAZDA6,12
+Mazda,MAZDASPEED3,2
+Mazda,MX-5 Miata,2
+Mazda,Mazda2,2
+Mazda,Mazda3,58
+Mazda,Mazda5,5
+Mazda,Mazda6,34
+Mazda,Tribute,1
+Mercedes-Benz,B-Class,1
+Mercedes-Benz,C-Class,57
+Mercedes-Benz,CL-Class,2
+Mercedes-Benz,CLA,29
+Mercedes-Benz,CLA-Class,2
+Mercedes-Benz,CLK,2
+Mercedes-Benz,CLS,4
+Mercedes-Benz,E-Class,41
+Mercedes-Benz,GL-Class,3
+Mercedes-Benz,GLA,11
+Mercedes-Benz,GLK,11
+Mercedes-Benz,GLK-Class,2
+Mercedes-Benz,M-Class,12
+Mercedes-Benz,Metris,1
+Mercedes-Benz,R-Class,1
+Mercedes-Benz,S-Class,4
+Mercedes-Benz,SL-Class,1
+Mercedes-Benz,SLK,2
+Mercedes-Benz,SLK-Class,2
+Mercury,Grand Marquis,2
+Mercury,Mountaineer,1
+Mitsubishi,Endeavor,2
+Mitsubishi,Galant,2
+Mitsubishi,Lancer,12
+Mitsubishi,Lancer Evolution,2
+Mitsubishi,Lancer Sportback,1
+Mitsubishi,Mirage,1
+Mitsubishi,Outlander,10
+Mitsubishi,Outlander Sport,22
+Mitsubishi,i-MiEV,2
+Nissan,350Z,1
+Nissan,370Z,10
+Nissan,Altima,95
+Nissan,Armada,6
+Nissan,Frontier,23
+Nissan,JUKE,22
+Nissan,LEAF,83
+Nissan,Maxima,41
+Nissan,Murano,24
+Nissan,Pathfinder,12
+Nissan,Quest,7
+Nissan,Rogue,45
+Nissan,Rogue Select,8
+Nissan,Sentra,44
+Nissan,Titan,5
+Nissan,Versa,33
+Nissan,Versa Note,32
+Nissan,Xterra,5
+Nissan,cube,1
+Porsche,Cayenne,1
+Ram,Pickup 1500,12
+Ram,Ram Pickup 1500,15
+Scion,FR-S,2
+Scion,iM,1
+Scion,iQ,20
+Scion,tC,15
+Scion,xB,4
+Scion,xD,9
+Smart,fortwo,59
+Subaru,BRZ,1
+Subaru,Forester,12
+Subaru,Impreza,14
+Subaru,Legacy,1
+Subaru,Outback,8
+Subaru,WRX,1
+Subaru,XV Crosstrek,6
+Toyota,4Runner,22
+Toyota,Avalon,14
+Toyota,Avalon Hybrid,1
+Toyota,Camry,124
+Toyota,Camry Hybrid,26
+Toyota,Corolla,119
+Toyota,FJ Cruiser,1
+Toyota,Highlander,17
+Toyota,Prius,97
+Toyota,Prius Plug-in Hybrid,11
+Toyota,Prius c,52
+Toyota,Prius v,13
+Toyota,RAV4,56
+Toyota,Sequoia,1
+Toyota,Sienna,36
+Toyota,Tacoma,14
+Toyota,Tundra,13
+Toyota,Venza,6
+Toyota,Yaris,24
+Volkswagen,Beetle,20
+Volkswagen,CC,11
+Volkswagen,GTI,2
+Volkswagen,Golf,3
+Volkswagen,Golf GTI,3
+Volkswagen,Jetta,74
+Volkswagen,Passat,59
+Volkswagen,Routan,2
+Volkswagen,Tiguan,28
+Volkswagen,Touareg,1
+Volvo,S60,20
+Volvo,V60 Cross Country,3
+Volvo,XC60,7
+Volvo,XC70,1
+Volvo,XC90,2

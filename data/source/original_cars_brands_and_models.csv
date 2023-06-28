@@ -1,0 +1,897 @@
+Марка авто,Модель
+Acura,
+,MDX
+Alfa Romeo,
+,Giulietta
+Audi,
+,80
+,100
+,A1
+,A3
+,A4
+,A5
+,A6
+,A7
+,A8
+,Q3
+,Q5
+,Q7
+,R8
+,RS6
+,S5
+,S8
+,TT
+BAW,
+,FENIX
+BAZ,
+,A079 Etalon
+BMW,
+,1 Series
+,3 Series
+,4 Series
+,5 Series
+,6 Series
+,7 Series
+,X1
+,X3
+,X4
+,X5
+,X6
+,Z3
+,Z4
+Brilliance,
+,V5
+BYD,
+,F3
+Cadillac,
+,CTS
+,Escalade
+,SRX
+Carrus,
+,Star
+Chery,
+,Amulet A15
+,Fora
+,Kimo S12
+,Tiggo
+,Tiggo 5
+,Tiggo T11
+Chevrolet,
+,Aveo
+,Blazer
+,Camaro
+,Caprice
+,Captiva
+,Cobalt
+,Cruze
+,Epica
+,Express
+,Lacetti
+,Lanos
+,Niva
+,Orlando
+,Rezzo
+,Spark
+,Suburban
+,Tahoe
+,TrailBlazer
+Chrysler,
+,300
+,300С
+,Grand Voyager
+,PT Cruiser
+,Pacifica
+,Sebring
+,Town and Country
+,Voyager
+Citroen,
+,BX
+,Berlingo
+,C1
+,C2 C3
+,C3 Picasso
+,C4
+,C4 AirCross
+,C4 Picasso
+,C5
+,C Crosser
+,C Elysee
+,DS3
+,DS4
+,Grand C4 Picasso
+,Jumper
+,Jumpy
+,Xantia
+,Xsara
+Daewoo,
+,BS106
+,Espero
+,Gentra
+,Lanos
+,Leganza
+,Matiz
+,Nexia
+,Nubira
+DAF,
+,95
+,CE
+,XF
+Datsun,
+,mi DO
+,on DO
+Dodge,
+,Caliber
+,Caravan
+,Challenger
+,Grand Caravan
+,Ram
+,Stratus
+DW Hower,
+,H3
+Emgrand,
+,EC7
+FAW,
+,Besturn B50
+,V5
+FIAT,
+,500
+,Albea
+,Bravo
+,Doblo
+,Ducato
+,Grande Punto
+,Linea
+,Panda
+,Punto
+,Scudo
+,Stilo
+,Uno
+Ford,
+,C Max
+,Cargo
+,EcoSport
+,Escape
+,Escort
+,Expedition
+,Explorer
+,F 150
+,Fiesta
+,Focus
+,Focus C Max
+,Fusion
+,Galaxy
+,Granada
+,Ка
+,Kuga
+,Maverick
+,Mondeo
+,Mustang
+Foton,
+,Auman
+Freightliner,
+,Century Class
+,Columbia
+GAZ,
+,52
+,53
+,66
+,3307
+,3309
+,172200 Volga
+,1724 Gazel
+,24 Volga
+,27 Gazel
+,31 Volga
+,3221 Gazel
+,3302 Gazel
+,3308 Sadko
+,3310 Valday
+,GAZel Biznes GAZon Next
+,Gazel
+,Gazel Next
+,SAZ 3507
+Geely,
+,CK
+,Emgrand EC7
+,GC6
+,MK
+Genesis,
+,G80
+GolAZ,
+,5291 Cruise
+Golden Dragon,
+,XML6126
+,XML6957
+Great Wall,
+,Hover
+,Hover H3
+,Hover H5
+Higer,
+,A80
+Hino,
+,300 Series
+,500 Series
+Honda,
+,Accord
+,Accord Crosstour
+,Airwave
+,CRV
+,Civic
+,Civic Ferio
+,Element
+,HR V
+,Integra
+,Jazz
+,Legend
+,Odyssey
+,Pilot
+,Prelude
+,Stepwgn
+,Stream
+HUMMER,
+,H2
+Hyundai,
+,Accent
+,Aero City
+,Avante
+,County
+,Coupe
+,Creta
+,Elantra
+,Equus
+,Galloper
+,Genesis
+,Getz
+,Grand Santa Fe Grand Starex
+,Grandeur
+,HD
+,H 1
+,Matrix
+,NF
+,Porter
+,Santa Fe
+,Solaris
+,Sonata
+,Starex
+,Terracan
+,Tiburon
+,Tucson
+,Universe Space
+,Veloster
+,i20
+,i30
+,i40
+,ix35
+,ix55
+Ikarus,
+,250
+,256
+,260
+,280
+Infiniti,
+,FX Series
+,G Series
+,JX Series
+,Q50
+,Q70 M Series
+,QX50
+,QX70
+,QX80
+,QX Series
+International,
+,9000 Series
+Iran Khodro,
+,Samand
+Isuzu,
+,Elf
+,F Series
+,Forward
+,N Series
+Iveco,
+,Daily
+,EuroCargo
+,EuroStar
+,EuroTech
+,Stralis
+,Trakker
+,TurboDaily
+Izh,
+,412
+,2125
+,2126
+,2715
+,2717
+,21261 Fabula
+Jaguar,
+,Pace
+,S Type
+,XE
+,XF
+,XJ
+,XK
+,XKR
+,X Type
+Jeep,
+,Cherokee
+,Compass
+,Grand Cherokee
+,Wrangler
+JMC,
+,Carrying
+KamAZ,
+,551
+,4308
+,4310
+,4539
+,5308
+,5410
+,5411
+,5460
+,5490
+,5511
+,6460
+,6511
+,6520
+,6522
+,44108
+,NefAz 4208
+KAvZ,
+,3976
+,4235
+,4238
+KIA,
+,Bongo
+,Carens
+,Carnival
+,Cerato
+,Granbird
+,Magentis
+,Mohave
+,Opirus
+,Optima
+,Picanto
+,Quoris
+,Rio
+,Rio X Line
+,Sorento
+,Soul
+,Spectra
+,Sportage
+,Venga
+,ceed
+,pro ceed
+King Long,
+,XMQ
+Land Rover,
+,Defender
+,Discovery
+,Discovery Sport
+,Freelander
+,Range Rover
+,Range Rover Evoque
+,Range Rover Sport
+Lexus,
+,ES
+,GS
+,GX
+,IS
+,LC
+,LS
+,LX
+,NX
+,RX
+,SC
+LiA7,
+,677
+,5256
+,5292
+,5293
+,6213
+Lifan,
+,Breez
+,Cebrium
+,Smily
+,Solano
+,X60
+MAN,
+,F2000
+,F90
+,L2000
+,Lions Coach
+,Lions Regio
+,TGA
+,TGL
+,TGS
+,TGX
+Maserati,
+,Levante
+MAZ,
+,43
+,53
+,54
+,55
+,63
+,64
+,65
+,103465
+,206067
+Mazda,
+,2
+,3
+,5
+,6
+,323
+,626
+,BT 50
+,Bongo
+,Bongo Friendee
+,CX5
+,CX7
+,CX9
+,Capella
+,Demio
+,Familia
+,MPV
+,MX5
+,Premacy
+,RX 8
+,Titan
+,Tribute
+Mercedes Benz,
+,A Klasse
+,Actros
+,Atego
+,Axor
+,B Klasse
+,CLA Klasse
+,CLK Klasse
+,CLS Klasse
+,CL Klasse
+,C Klasse
+,Citan
+,Conecto
+,E Klasse
+,GLA Klasse GLC Klasse GLE Klasse
+,GLK Klasse
+,GLS Klasse
+,GL Klasse
+,LK Series
+,MB Series
+,M Klasse
+,О3О3
+,0350 Tourismo
+,405
+,0560 Intouro
+,R Klasse
+,SK Series
+,SLK Klasse
+,SL Klasse
+,S Klasse
+,Sprinter
+,T1
+,T2
+,Travego
+,V Klasse
+,Vario
+,Viano
+,Vito
+MINI,
+,Countryman
+Mini,
+,Cooper
+Mitsubishi,
+,ASX
+,Airtrek
+,Canter
+,Carisma
+,Colt
+,Delica
+,Delica Space Gear
+,Eclipse
+,Fuso Canter
+,Fuso Fighter
+,Galant
+,Grandis
+,L200
+,Lancer
+,Lancer Cedia
+,Lancer Evolution
+,Outlander
+,Outlander XL
+,Pajero
+,Pajero Sport
+,Pajero iO
+,RVR
+Moskvich,
+,408
+,412
+,2140
+,2141
+Nefaz,
+,5299
+Neoplan,
+,Cityliner
+,Skyliner
+Nissan,
+,AD
+,Almera
+,Almera Classic
+,Atlas
+,Avenir
+,Bluebird
+,Bluebird Sylphy
+,Cedric
+,Cefiro
+,Cube
+,Diesel Condor
+,GT R
+,Juke
+,Laurel
+,Liberty
+,March
+,Maxima
+,Maxima QX
+,Micra
+,Murano
+,NP300 Pickup
+,Navara
+,Note
+,Pathfinder
+,Patrol
+,Presage
+,Primera
+,Pulsar
+,Qashqai
+,Qashqai 2
+,Safari
+,Sentra
+,Serena
+,Skyline
+,Sunny
+,Teana
+,Terrano
+,Terrano II
+,Tiida
+,Vanette
+,Wingroad
+,X Trail
+Opel,
+,Antara
+,Ascona
+,Astra
+,Calibra
+,Combo
+,Corsa
+,Frontera
+,Insignia
+,Kadett
+,Meriva
+,Mokka
+,Omega
+,Rekord
+,Tigra
+,Vectra
+,Vivaro
+,Zafira
+PAZ,
+,3204
+,3205
+,4234
+,4230 Avrora
+Peugeot,
+,106
+,107
+,205
+,206
+,207
+,208
+,301
+,306
+,307
+,308
+,405
+,406
+,407
+,408
+,508
+,607
+,3008
+,4007
+,Boxer
+,Expert
+,Expert Tepee
+,Partner
+Porsche,
+,911
+,Boxster
+,Cayenne
+,Cayman
+,Macan
+,Panamera
+Ram,
+,Pickup
+Ravon,
+,Nexia
+,Nexia R3
+Renault,
+,19 21
+,Clio
+,Duster
+,Espace
+,Fluence
+,Grand Scenic
+,Kangoo
+,Kaptur
+,Koleos
+,Laguna
+,Logan
+,Magnum
+,Master
+,Megane
+,Premium
+,Sandero
+,Sandero Stepway
+,Scenic
+,Symbol
+,T Series
+,Trafic
+,Twingo
+SAAB,
+,900
+,9000
+,9 3
+,9 5
+Saturn,
+,VUE
+Scania,
+,G Series
+,III Series
+,IV Series
+,P Series
+,R Series
+SEAT,
+,Leon
+Setra,
+,200 Series
+,300 Series
+Shaanxi,
+,SX3250 Series
+Skoda,
+,Fabia
+,Favorit
+,Felicia
+,Kodiaq
+,Octavia
+,Rapid
+,Roomster
+,Superb
+,Yeti
+SsangYong,
+,Actyon
+,Actyon Sports
+,Istana
+,Korando
+,Kyron
+,Rexton
+Subaru,
+,B9 Tribeca
+,Forester
+,Impreza
+,Impreza WRX STi
+,Impreza XV
+,Legacy
+,Outback
+,Tribeca
+,XV
+Suzuki,
+,Escudo
+,Grand Vitara
+,Ignis
+,Jimny
+,Liana
+,SX4
+,SX4 S Cross
+,Swift
+,Vitara
+,Wagon R
+Toyota,
+,4Runner
+,Allion
+,Alphard
+,Altezza
+,Auris
+,Avalon
+,Avensis
+,Caldina
+,Camry
+,Camry Solara
+,Carina
+,Carina E
+,Carina ED
+,Celica
+,Chaser
+,Corolla
+,Corolla Allex Corolla Axio
+,Corolla Fielder
+,Corolla Levin
+,Corolla Runx
+,Corolla Spacio
+,Corolla Verso
+,Corona
+,Corona Premio
+,Corsa
+,Cresta
+,Crown
+,Dyna
+,Estima
+,FJ Cruiser
+,Fortuner
+,Fun Cargo
+,Gaia
+,Harrier
+,Hiace
+,Highlander
+,Hilux
+,Hilux Surf
+,Ipsum
+,Ist
+,Kluger
+,Land Cruiser
+,Land Cruiser Prado
+,Lite Ace
+,Lite Ace Noah
+,Mark II
+,Mark X
+,Matrix
+,Nadia
+,Noah
+,Ора
+,Passo
+,Platz
+,Premio
+,Previa
+,Prius
+,Probox
+,RAV4
+,Ractis
+,Raum
+,Sequoia
+,Sienna
+,Sprinter
+,Sprinter Carib
+,Starlet
+,Succeed
+,Supra
+,Town Ace
+,Town Ace Noah
+,Toyo Ace
+,Tundra
+,Venza
+,Verso
+,Vista
+,Vista Ardeo
+,Vitz
+,Windom
+,Wish
+,Yaris
+,bB
+UAZ,
+,316
+,452
+,469
+,2206
+,3151
+,3303
+,3962
+,39094
+,390995
+,23632 Pickup
+,Profi
+UAZ,
+,4320
+,5557
+Van Hool,
+,T815
+VAZ Lada,
+,2101
+,2102
+,2103
+,2104
+,2105
+,2106
+,2107
+,2108
+,2109
+,2110
+,2111
+,2112
+,2113
+,2114
+,2115
+,21099
+,2112 Coupe
+,2120 Nadezhda
+,Granta
+,Kalina
+,Kalina Cross
+,Largus
+,Niva
+,Oka
+,Priora
+,Vesta
+,Vesta SW
+,Vesta SW Cross
+,XRAY
+VIS,
+,2347
+,2349
+,234700
+,234900
+Volkswagen,
+,Amarok
+,Bora
+,Caddy
+,Caravelle
+,Crafter
+,Golf
+,Golf Plus
+,Jetta
+,LT
+,Multivan
+,New Beetle
+,Passat
+,Passat Alltrack
+,PassatC
+,Phaeton
+,Polo
+,Scirocco
+,Sharan
+,Teramont
+,Tiguan
+,Touareg
+,Touran
+,Transporter
+Volvo,
+,740
+,850
+,940
+,240 Series
+,F12
+,FE
+,FH
+,FL
+,FM
+,FMX
+,S40
+,S60
+,S80
+,V40
+,V40 Cross Country
+,V50
+,V70
+,VN Series
+,XC60
+,XC70
+,XC90
+Vortex,
+,Tingo
+ZAZ,
+,968
+,11055
+,1102 Tavriya
+,1103 Slavuta
+,Chance
+,Lanos
+,Sens
+ZIL,
+,130
+,131
+,133
+,4314
+,4331
+,4333
+,5301 Bychok
+,MMZ 4502
+,MMZ 4505
+,MMZ 45085
+,MMZ 554
