@@ -52,7 +52,7 @@ def remove_slash_and_other_trash(model:str) -> str:
         return '0'
 
 def download_image(url, save_path):
-    response = requests.get(url)
+    response = requests.get(url, stream=True)
     response.raise_for_status()
 
     with open(save_path, 'wb') as file:
@@ -62,7 +62,7 @@ def download_image(url, save_path):
 
 
 async def download_image_asynchronously(url, save_path):
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(trust_env=True) as session:
         async with session.get(url) as response:
             response.raise_for_status()
             with open(save_path, 'wb') as file:
@@ -127,7 +127,7 @@ async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, as
 
 
 async def main():
-    await parse_xml(xml_files_path="../50k/", save_result_to="Cars", test_mode=True, asynchronously=True)
+    await parse_xml(xml_files_path="../50k/", save_result_to="../XML_parsed_images/", test_mode=False, asynchronously=True)
 
 # ##### For Jupyter, we already have a loop, so we can just await the fucntion:
 # await download_image(url="", save_path="")
@@ -139,3 +139,5 @@ if __name__ == "__main__":
 
 
 
+
+#%%
