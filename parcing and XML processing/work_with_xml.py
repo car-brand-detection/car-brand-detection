@@ -1,14 +1,16 @@
 import os
 import re
+import ssl
 import time
 import aiohttp
 import asyncio
 import requests
+import urllib.request
 import xml.etree.ElementTree as ET
 
 
 # All tags:
-# {'link', 'plate_number_image_url', 'plate_id', 'plate_title', 'tags', 'plate_region', 'fon_id', 'fon_title', 'model', 'photo_url', 'plate_number', 'country', 'model2', 'car'}
+# {'link', 'plate_кnumber_image_url', 'plate_id', 'plate_title', 'tags', 'plate_region', 'fon_id', 'fon_title', 'model', 'photo_url', 'plate_number', 'country', 'model2', 'car'}
 
 car_pattern = r"([a-zA-Z0-9а-яА-Я]+)"
 
@@ -52,7 +54,7 @@ def remove_slash_and_other_trash(model:str) -> str:
         return '0'
 
 def download_image(url, save_path):
-    response = requests.get(url, stream=True)
+    response = requests.get(url, stream=True, verify=ssl.CERT_NONE)
     response.raise_for_status()
 
     with open(save_path, 'wb') as file:
@@ -61,8 +63,14 @@ def download_image(url, save_path):
     # print(f"Image downloaded at: {save_path}")
 
 
-async def download_image_asynchronously(url, save_path):
-    async with aiohttp.ClientSession(trust_env=True) as session:
+def get_connector_witH_disabled_ssl():
+    connector = aiohttp.TCPConnector()
+    return connector
+
+async def download_image_asynchronously(url, save_path, use_ssl: bool = False):
+
+    connector = None if use_ssl else get_connector_witH_disabled_ssl()
+    async with aiohttp.ClientSession(trust_env=True, connector=connector) as session:
         async with session.get(url) as response:
             response.raise_for_status()
             with open(save_path, 'wb') as file:
@@ -78,7 +86,7 @@ async def download_image_asynchronously(url, save_path):
 TEST_URL = "https://cdn.pixabay.com/photo/2023/05/15/09/18/iceberg-7994536_1280.jpg"
 
 
-async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, asynchronously = False):
+async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, asynchronously=False):
     """ Function to parse all XML files in folder and create all folders according to model names"""
     save_result_to += "/"
     xml_files = os.listdir(xml_files_path)
@@ -117,7 +125,12 @@ async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, as
                 if asynchronously:
                     await download_image_asynchronously(url=url, save_path=picture_path + '/' + image_name)
                 else:
-                    download_image(url=url, save_path=picture_path + '/' + image_name)
+                    try:
+                        download_image(url=url, save_path=picture_path + '/' + image_name)
+                    except requests.HTTPError:
+                        print(f"{image_name} wasn't downloaded due to HTTP Error.")
+                        urllib.request.urlretrieve(url=url, filename=picture_path)
+
 
             except:
                 raise
@@ -134,10 +147,14 @@ async def main():
 
 if __name__ == "__main__":
     start_time = time.time()
+    policy = asyncio.WindowsSelectorEventLoopPolicy()
+    asyncio.set_event_loop_policy(policy)
     asyncio.run(main())
     print(f"Code execution took {time.time() - start_time} seconds.")
 
 
 
+
+#%%
 
 #%%
