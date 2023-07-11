@@ -158,7 +158,7 @@ async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, as
 
 
 async def main():
-    await parse_xml(xml_files_path="50k/", save_result_to="../XML_parsed_images/", test_mode=False, asynchronously=True, skip_exist=False)
+    await parse_xml(xml_files_path="50k/", save_result_to="../XML_parsed_images/", test_mode=False, asynchronously=True, skip_exist=True)
 
 # ##### For Jupyter, we already have a loop, so we can just await the fucntion:
 # await download_image(url="", save_path="")
