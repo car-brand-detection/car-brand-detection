@@ -72,7 +72,7 @@ async def download_image_asynchronously(url, save_path, use_ssl: bool = False):
 
     connector = None if use_ssl else get_connector_witH_disabled_ssl()
     async with aiohttp.ClientSession(trust_env=True, connector=connector) as session:
-        async with session.get(url) as response:
+        async with session.get(url, ssl=False) as response:
             response.raise_for_status()
             with open(save_path, 'wb') as file:
                 while True:
@@ -139,7 +139,8 @@ async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, as
                 else:
                     success = download_image(url=url, save_path=end_path)
             except (requests.HTTPError, aiohttp.ClientConnectorError):
-                print(f"{image_name} wasn't downloaded due to HTTP Error.  Program stops at this moment")
+                print(f"{end_path} wasn't downloaded due to HTTP Error.  Program stopped at this moment")
+                raise
                 return
             except:
                 raise
@@ -158,7 +159,7 @@ async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, as
 
 
 async def main():
-    await parse_xml(xml_files_path="50k/", save_result_to="../XML_parsed_images/", test_mode=False, asynchronously=True, skip_exist=True)
+    await parse_xml(xml_files_path="../50k/", save_result_to="../XML_parsed_images/", test_mode=False, asynchronously=True, skip_exist=True)
 
 # ##### For Jupyter, we already have a loop, so we can just await the fucntion:
 # await download_image(url="", save_path="")
