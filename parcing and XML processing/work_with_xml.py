@@ -13,7 +13,7 @@ import xml.etree.ElementTree as ET
 # {'link', 'plate_кnumber_image_url', 'plate_id', 'plate_title', 'tags', 'plate_region', 'fon_id', 'fon_title', 'model', 'photo_url', 'plate_number', 'country', 'model2', 'car'}
 
 car_pattern = r"([a-zA-Z0-9а-яА-Я]+)"
-
+TIMEOUT = aiohttp.ClientTimeout(total=1)
 
 def get_folder_name(generation: str) -> str:
     """
@@ -71,18 +71,36 @@ def get_connector_witH_disabled_ssl():
 async def download_image_asynchronously(url, save_path, use_ssl: bool = False):
 
     connector = None if use_ssl else get_connector_witH_disabled_ssl()
-    async with aiohttp.ClientSession(trust_env=True, connector=connector) as session:
-        async with session.get(url, ssl=False) as response:
-            response.raise_for_status()
-            with open(save_path, 'wb') as file:
-                while True:
-                    chunk = await response.content.read(1024)
-                    if not chunk:
-                        break
-                    file.write(chunk)
-    return True
+    async with aiohttp.ClientSession(trust_env=True,
+                                     connector=connector,
+                                     # timeout=TIMEOUT
+                                     ) as session:
+        async with session.get(url, ssl=False, timeout=TIMEOUT) as response:
+            try:
+                if response.status == 200:
+                    with open(save_path, 'wb') as file:
+                        while True:
+                            chunk = await response.content.read(1024)
+                            if not chunk:
+                                break
+                            file.write(chunk)
+                    print("Saved: {}".format(save_path))
+                    return True
+                elif response.status == 404:
+                    print(f"The image from {url} WAS NOT saved to {save_path} due to BROKEN URL (404). Program goes further.")
+                elif response.status == 403:
+                    response.raise_for_status()
+                else:
+                    print(f"The image from {url} WAS NOT saved to {save_path} due to UNEXPECTED ERROR. HTTP ERROR CODE IS: {response.status}. If the error persists, TERMINATE THE PROGRAM.")
+                    asyncio.sleep(5)
+            except aiohttp.ServerTimeoutError:
+                print("TIMEOUT")
+            finally:
+                return False
 
-    # print(f"Image downloaded asynchronously at: {save_path}")
+
+
+    # print(f"The image from {url} mage downloaded asynchronously at: {save_path}")
 
 
 TEST_URL = "https://cdn.pixabay.com/photo/2023/05/15/09/18/iceberg-7994536_1280.jpg"
@@ -147,7 +165,7 @@ async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, as
 
             if success:
                 downloaded += 1
-            if downloaded % 10 == 0:
+            if downloaded and downloaded % 10 == 0:
                 print(f"{downloaded} of images were downloaded for current XML file.\n")
         print(
             f"File {file_n} is processed successfully. For this file:\n"
@@ -159,7 +177,7 @@ async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, as
 
 
 async def main():
-    await parse_xml(xml_files_path="../50k/", save_result_to="../XML_parsed_images/", test_mode=False, asynchronously=True, skip_exist=True)
+    await parse_xml(xml_files_path="50k/", save_result_to="../XML_parsed_images/", test_mode=False, asynchronously=True, skip_exist=True)
 
 # ##### For Jupyter, we already have a loop, so we can just await the fucntion:
 # await download_image(url="", save_path="")
@@ -168,6 +186,7 @@ if __name__ == "__main__":
     start_time = time.time()
     policy = asyncio.WindowsSelectorEventLoopPolicy()
     asyncio.set_event_loop_policy(policy)
+
     asyncio.run(main())
     print(f"Code execution took {time.time() - start_time} seconds.")
 
