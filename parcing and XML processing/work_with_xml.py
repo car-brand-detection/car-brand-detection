@@ -59,6 +59,7 @@ def download_image(url, save_path):
 
     with open(save_path, 'wb') as file:
         file.write(response.content)
+    return True
 
     # print(f"Image downloaded at: {save_path}")
 
@@ -79,6 +80,7 @@ async def download_image_asynchronously(url, save_path, use_ssl: bool = False):
                     if not chunk:
                         break
                     file.write(chunk)
+    return True
 
     # print(f"Image downloaded asynchronously at: {save_path}")
 
@@ -86,17 +88,19 @@ async def download_image_asynchronously(url, save_path, use_ssl: bool = False):
 TEST_URL = "https://cdn.pixabay.com/photo/2023/05/15/09/18/iceberg-7994536_1280.jpg"
 
 
-async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, asynchronously=False):
+async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, asynchronously=False, skip_exist=True):
     """ Function to parse all XML files in folder and create all folders according to model names"""
     save_result_to += "/"
     xml_files = os.listdir(xml_files_path)
-    for file_n, file_path in enumerate(xml_files[:2]):
+    for file_n, file_path in enumerate(xml_files[:]):
         with open(xml_files_path + file_path, 'r', encoding='utf-8') as file:
             tree = ET.parse(file)
         root = tree.getroot()
 
         # Access elements and attributes in the XML file
         for n, child in enumerate(root[:]):
+            exists = 0
+            downloaded = 0
 
             car = child.find("car").text
             if not car or len(car) < 2:
@@ -119,28 +123,42 @@ async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, as
                 tags[tag_n] = remove_slash_and_other_trash(tag)
 
             picture_path = save_result_to + '/'.join(tags)
+
+            os.makedirs(picture_path, exist_ok=True)
+
+            end_path = picture_path + '/' + image_name
+            if skip_exist:
+                if image_name in os.listdir(picture_path):
+                    # Means image already exists, we can skip
+                    exists += 1
+                    continue
+
             try:
-                os.makedirs(picture_path, exist_ok=True)
-
                 if asynchronously:
-                    await download_image_asynchronously(url=url, save_path=picture_path + '/' + image_name)
+                    success = await download_image_asynchronously(url=url, save_path=end_path)
                 else:
-                    try:
-                        download_image(url=url, save_path=picture_path + '/' + image_name)
-                    except requests.HTTPError:
-                        print(f"{image_name} wasn't downloaded due to HTTP Error.")
-                        urllib.request.urlretrieve(url=url, filename=picture_path)
-
-
+                    success = download_image(url=url, save_path=end_path)
+            except (requests.HTTPError, aiohttp.ClientConnectorError):
+                print(f"{image_name} wasn't downloaded due to HTTP Error.  Program stops at this moment")
+                return
             except:
                 raise
-        print(f"File {file_n} is processed successfully.")
+
+            if success:
+                downloaded += 1
+            if downloaded % 10 == 0:
+                print(f"{downloaded} of images were downloaded for current XML file.\n")
+        print(
+            f"File {file_n} is processed successfully. For this file:\n"
+            f"- {downloaded} of images were downloaded.\n"
+            f"- {exists} of images already exist and were skipped.\n"
+        )
 
 
 
 
 async def main():
-    await parse_xml(xml_files_path="../50k/", save_result_to="../XML_parsed_images/", test_mode=False, asynchronously=True)
+    await parse_xml(xml_files_path="50k/", save_result_to="../XML_parsed_images/", test_mode=False, asynchronously=True, skip_exist=False)
 
 # ##### For Jupyter, we already have a loop, so we can just await the fucntion:
 # await download_image(url="", save_path="")
