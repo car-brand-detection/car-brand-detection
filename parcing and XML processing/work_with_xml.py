@@ -13,7 +13,7 @@ import xml.etree.ElementTree as ET
 # {'link', 'plate_кnumber_image_url', 'plate_id', 'plate_title', 'tags', 'plate_region', 'fon_id', 'fon_title', 'model', 'photo_url', 'plate_number', 'country', 'model2', 'car'}
 
 car_pattern = r"([a-zA-Z0-9а-яА-Я]+)"
-TIMEOUT = aiohttp.ClientTimeout(total=1)
+TIMEOUT = aiohttp.ClientTimeout(total=60)
 
 def get_folder_name(generation: str) -> str:
     """
@@ -71,12 +71,13 @@ def get_connector_witH_disabled_ssl():
 async def download_image_asynchronously(url, save_path, use_ssl: bool = False):
 
     connector = None if use_ssl else get_connector_witH_disabled_ssl()
-    async with aiohttp.ClientSession(trust_env=True,
-                                     connector=connector,
-                                     # timeout=TIMEOUT
-                                     ) as session:
-        async with session.get(url, ssl=False, timeout=TIMEOUT) as response:
-            try:
+
+    try:
+        async with aiohttp.ClientSession(trust_env=True,
+                                         connector=connector,
+                                         # timeout=TIMEOUT
+                                         ) as session:
+            async with session.get(url, ssl=False, timeout=TIMEOUT) as response:
                 if response.status == 200:
                     with open(save_path, 'wb') as file:
                         while True:
@@ -93,10 +94,10 @@ async def download_image_asynchronously(url, save_path, use_ssl: bool = False):
                 else:
                     print(f"The image from {url} WAS NOT saved to {save_path} due to UNEXPECTED ERROR. HTTP ERROR CODE IS: {response.status}. If the error persists, TERMINATE THE PROGRAM.")
                     asyncio.sleep(5)
-            except aiohttp.ServerTimeoutError:
-                print("TIMEOUT")
-            finally:
-                return False
+    except aiohttp.ServerTimeoutError:
+        print(f"The image from {url} WAS NOT saved to {save_path} due to REACHED TIMEOUT")
+    finally:
+        return False
 
 
 
@@ -177,7 +178,7 @@ async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, as
 
 
 async def main():
-    await parse_xml(xml_files_path="50k/", save_result_to="../XML_parsed_images/", test_mode=False, asynchronously=True, skip_exist=True)
+    await parse_xml(xml_files_path="../50k/", save_result_to="../XML_parsed_images/", test_mode=False, asynchronously=True, skip_exist=True)
 
 # ##### For Jupyter, we already have a loop, so we can just await the fucntion:
 # await download_image(url="", save_path="")
