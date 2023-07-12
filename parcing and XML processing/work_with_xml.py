@@ -160,7 +160,6 @@ async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, as
             except (requests.HTTPError, aiohttp.ClientConnectorError):
                 print(f"{end_path} wasn't downloaded due to HTTP Error.  Program stopped at this moment")
                 raise
-                return
             except:
                 raise
 
