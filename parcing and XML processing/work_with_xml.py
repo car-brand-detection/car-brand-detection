@@ -107,17 +107,30 @@ async def download_image_asynchronously(url, save_path, use_ssl: bool = False):
 TEST_URL = "https://cdn.pixabay.com/photo/2023/05/15/09/18/iceberg-7994536_1280.jpg"
 
 
-async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, asynchronously=False, skip_exist=True):
-    """ Function to parse all XML files in folder and create all folders according to model names"""
+async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, asynchronously=False, skip_exist=True,
+                    divide_by='category'):
+    """
+         Function to parse all XML files in folder and create all folders according to model names or XML file names
+
+    :param xml_files_path:
+    :param save_result_to:
+    :param test_mode:
+    :param asynchronously:
+    :param skip_exist:
+    :param divide_by: what will we use as subfolders names: categories (
+        e.g. models) or source files names. For second case use 'file_name'
+    :return: None
+    """
+    assert divide_by in ['category', 'file_name']
     save_result_to += "/"
     xml_files = os.listdir(xml_files_path)
-    for file_n, file_path in enumerate(xml_files[:]):
+    for file_n, file_path in enumerate(xml_files):
         with open(xml_files_path + file_path, 'r', encoding='utf-8') as file:
             tree = ET.parse(file)
         root = tree.getroot()
 
         # Access elements and attributes in the XML file
-        for n, child in enumerate(root[:]):
+        for n, child in enumerate(root):
             exists = 0
             downloaded = 0
 
@@ -135,13 +148,16 @@ async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, as
             model2 = child.find("model2").text
 
 
-            tags = [car, model, model2]
+            if divide_by == 'category':
+                tags = [car, model, model2]
 
-            for tag_n, tag in enumerate(tags[:], start=0):
-                tag = get_folder_name(tag)
-                tags[tag_n] = remove_slash_and_other_trash(tag)
+                for tag_n, tag in enumerate(tags, start=0):
+                    tag = get_folder_name(tag)
+                    tags[tag_n] = remove_slash_and_other_trash(tag)
 
-            picture_path = save_result_to + '/'.join(tags)
+                picture_path = save_result_to + '/'.join(tags)
+            else:
+                picture_path = save_result_to + '/' + file_path.split(".")[0]
 
             os.makedirs(picture_path, exist_ok=True)
 
@@ -155,8 +171,9 @@ async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, as
             try:
                 if asynchronously:
                     success = await download_image_asynchronously(url=url, save_path=end_path)
+
                 else:
-                    success = download_image(url=url, save_path=end_path)
+                        success = download_image(url=url, save_path=end_path)
             except (requests.HTTPError, aiohttp.ClientConnectorError):
                 print(f"{end_path} wasn't downloaded due to HTTP Error.  Program stopped at this moment")
                 raise
@@ -177,7 +194,7 @@ async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, as
 
 
 async def main():
-    await parse_xml(xml_files_path="../50k/", save_result_to="../XML_parsed_images/", test_mode=False, asynchronously=True, skip_exist=True)
+    await parse_xml(xml_files_path="New_XML/", save_result_to="../New_XML_parsed_images/", test_mode=False, asynchronously=True, skip_exist=True, divide_by='file_name')
 
 # ##### For Jupyter, we already have a loop, so we can just await the fucntion:
 # await download_image(url="", save_path="")
