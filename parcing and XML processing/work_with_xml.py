@@ -173,7 +173,7 @@ async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, as
                     success = await download_image_asynchronously(url=url, save_path=end_path)
 
                 else:
-                        success = download_image(url=url, save_path=end_path)
+                    success = download_image(url=url, save_path=end_path)
             except (requests.HTTPError, aiohttp.ClientConnectorError):
                 print(f"{end_path} wasn't downloaded due to HTTP Error.  Program stopped at this moment")
                 raise
