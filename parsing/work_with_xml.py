@@ -64,7 +64,7 @@ def download_image(url, save_path):
     # print(f"Image downloaded at: {save_path}")
 
 
-def get_connector_witH_disabled_ssl():
+def get_connector_with_disabled_ssl():
     connector = aiohttp.TCPConnector()
     return connector
 
