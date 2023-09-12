@@ -70,7 +70,7 @@ def get_connector_with_disabled_ssl():
 
 async def download_image_asynchronously(url, save_path, use_ssl: bool = False):
 
-    connector = None if use_ssl else get_connector_witH_disabled_ssl()
+    connector = None if use_ssl else get_connector_with_disabled_ssl()
 
     try:
         async with aiohttp.ClientSession(trust_env=True,
