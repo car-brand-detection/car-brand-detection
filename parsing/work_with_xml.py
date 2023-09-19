@@ -2,18 +2,20 @@ import os
 import re
 import ssl
 import time
-import aiohttp
 import asyncio
-import requests
+
 import urllib.request
 import xml.etree.ElementTree as ET
 
+import requests
+import aiohttp
+from tqdm import tqdm
 
 # All tags:
 # {'link', 'plate_кnumber_image_url', 'plate_id', 'plate_title', 'tags', 'plate_region', 'fon_id', 'fon_title', 'model', 'photo_url', 'plate_number', 'country', 'model2', 'car'}
 
 car_pattern = r"([a-zA-Z0-9а-яА-Я]+)"
-TIMEOUT = aiohttp.ClientTimeout(total=60)
+TIMEOUT = aiohttp.ClientTimeout(total=600)
 
 def get_folder_name(generation: str) -> str:
     """
@@ -61,7 +63,18 @@ def download_image(url, save_path):
         file.write(response.content)
     return True
 
-    # print(f"Image downloaded at: {save_path}")
+
+from urllib.parse import urlparse
+
+async def validate_url(url):
+    try:
+        result = urlparse(url)
+        return all([result.scheme, result.netloc]) and (
+                "http" in result.scheme or "https" in result.scheme
+        )
+    except ValueError:
+        return False
+
 
 
 def get_connector_with_disabled_ssl():
@@ -72,32 +85,34 @@ async def download_image_asynchronously(url, save_path, use_ssl: bool = False):
 
     connector = None if use_ssl else get_connector_with_disabled_ssl()
 
-    try:
-        async with aiohttp.ClientSession(trust_env=True,
-                                         connector=connector,
-                                         # timeout=TIMEOUT
-                                         ) as session:
-            async with session.get(url, ssl=False, timeout=TIMEOUT) as response:
-                if response.status == 200:
-                    with open(save_path, 'wb') as file:
-                        while True:
-                            chunk = await response.content.read(1024)
-                            if not chunk:
-                                break
-                            file.write(chunk)
-                    print("Saved: {}".format(save_path))
-                    return True
-                elif response.status == 404:
-                    print(f"The image from {url} WAS NOT saved to {save_path} due to BROKEN URL (404). Program goes further.")
-                elif response.status == 403:
-                    response.raise_for_status()
-                else:
-                    print(f"The image from {url} WAS NOT saved to {save_path} due to UNEXPECTED ERROR. HTTP ERROR CODE IS: {response.status}. If the error persists, TERMINATE THE PROGRAM.")
-                    asyncio.sleep(5)
-    except aiohttp.ServerTimeoutError:
-        print(f"The image from {url} WAS NOT saved to {save_path} due to REACHED TIMEOUT")
-    finally:
-        return False
+    async with aiohttp.ClientSession(trust_env=True,
+                                     connector=connector,
+                                     timeout=TIMEOUT
+                                     ) as session:
+        async with session.get(url, ssl=False, timeout=TIMEOUT) as response:
+            if response.status == 200:
+                with open(save_path, 'wb') as file:
+                    while True:
+                        chunk = await response.content.read(1024)
+                        if not chunk:
+                            break
+                        file.write(chunk)
+                # print("Saved: {}".format(save_path))
+                return True
+            elif response.status == 404:
+                print(f"The image from {url} WAS NOT saved to {save_path} due to BROKEN URL (404). Program goes further (running...)")
+            elif response.status == 403:
+                pass
+                # print(f"ERROR 403: NO ACCESS!")
+            elif response.status == 504:
+                print(f"CODE 504: TIMEOUT ERROR!")
+                # response.raise_for_status()
+            else:
+                print(f"UNEXPECTED ERROR! The image from {url} WAS NOT saved to {save_path} due to. HTTP ERROR CODE IS: {response.status}.\nIf the error persists, TERMINATE THE PROGRAM!!!")
+                await asyncio.sleep(5)
+                response.raise_for_status()
+    # print(f"ERROR {response.status} WITH URL: {url}")
+    return False
 
 
 
@@ -107,8 +122,18 @@ async def download_image_asynchronously(url, save_path, use_ssl: bool = False):
 TEST_URL = "https://cdn.pixabay.com/photo/2023/05/15/09/18/iceberg-7994536_1280.jpg"
 
 
+
+async def show_progress(current=0, total=30, size=None, item='file'):
+    size = total if not size else size
+    string_pointer = int(current / total * size)
+    label = f"|{item} {current}|"
+    label = f"{label:->{string_pointer + len(label)}}"
+    label = f"{label:><{size - string_pointer + len(label)}}"
+    label += f"|of {total}|"
+    print("\n", label)
+
 async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, asynchronously=False, skip_exist=True,
-                    divide_by='category'):
+                    divide_by='category', request_delay = 1e-9):
     """
          Function to parse all XML files in folder and create all folders according to model names or XML file names
 
@@ -124,15 +149,25 @@ async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, as
     assert divide_by in ['category', 'file_name']
     save_result_to += "/"
     xml_files = os.listdir(xml_files_path)
-    for file_n, file_path in enumerate(xml_files):
+    number_of_iterations = len(xml_files)
+
+
+    for file_n, file_path in enumerate(xml_files, start=1):
         with open(xml_files_path + file_path, 'r', encoding='utf-8') as file:
             tree = ET.parse(file)
         root = tree.getroot()
+        await show_progress(current=file_n, total=number_of_iterations, size=30)
+
+        total = 0
+        # broken = 0
+        exists = 0
+        downloaded = 0
+        failed = 0
 
         # Access elements and attributes in the XML file
-        for n, child in enumerate(root):
-            exists = 0
-            downloaded = 0
+        for n, child in enumerate(
+                tqdm(root, desc='XML processing...'),
+        ):
 
             car = child.find("car").text
             if not car or len(car) < 2:
@@ -143,13 +178,23 @@ async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, as
 
             url = TEST_URL if test_mode else photo_url
 
+            # if not await validate_url(url):
+            #     broken += 1
+
+            total += 1
+            # if total and total % 100 == 0:
+            #     break
 
             model = child.find("model").text
-            model2 = child.find("model2").text
+            # model2 = child.find("model2").text
 
 
             if divide_by == 'category':
-                tags = [car, model, model2]
+                tags = [
+                    car,
+                    model,
+                    # model2
+                ]
 
                 for tag_n, tag in enumerate(tags, start=0):
                     tag = get_folder_name(tag)
@@ -175,26 +220,54 @@ async def parse_xml(xml_files_path: str, save_result_to: str, test_mode=True, as
                 else:
                     success = download_image(url=url, save_path=end_path)
             except (requests.HTTPError, aiohttp.ClientConnectorError):
-                print(f"{end_path} wasn't downloaded due to HTTP Error.  Program stopped at this moment")
+                print(f"{end_path} wasn't downloaded due to HTTP Error.  Program STOPPED at this moment")
                 raise
             except:
                 raise
 
             if success:
                 downloaded += 1
-            if downloaded and downloaded % 10 == 0:
-                print(f"{downloaded} of images were downloaded for current XML file.\n")
-        print(
-            f"File {file_n} is processed successfully. For this file:\n"
-            f"- {downloaded} of images were downloaded.\n"
-            f"- {exists} of images already exist and were skipped.\n"
-        )
+            else:
+                failed += 1
+                # await asyncio.sleep(0.001)
 
+            await asyncio.sleep(request_delay)
+
+            # if downloaded and downloaded % 10 == 0:
+            #     pass
+            #     print(f"{downloaded} of images were downloaded for current XML file.\n")
+
+            # if total and total % 100 == 0:
+            #     break
+
+        if downloaded + exists > 0 and failed < downloaded + exists:
+        # if failed == 0:
+            print(
+                f"File {file_n} ({file_path}) is processed successfully. For this file:\n"
+                f"- {downloaded} картинок скачали.\n"
+                f"- {exists} картинок уже скачаны (пропущены).\n"
+                f"- {total} обработано в сумме.\n"
+                # f"- {broken} поломанных ссылок.\n"
+                f"- {failed} НЕ получилось скачать.\n"
+            )
+        else:
+            print(f"\nFAILED: файл {file_path}; номер {file_n}.\n"
+                  f"- {total} обработано в сумме.\n"
+                  f"- {failed} НЕ получилось скачать.\n"
+            )
+            request_delay *= 10
+            print(f"Увеличиваем задержку в {10} раз - до {request_delay}. Начинаем скачивание заново.")
+            return await parse_xml(
+                xml_files_path, save_result_to,
+                test_mode, asynchronously, skip_exist,
+                divide_by, request_delay
+            )
 
 
 
 async def main():
-    await parse_xml(xml_files_path="New_XML/", save_result_to="../New_XML_parsed_images/", test_mode=False, asynchronously=True, skip_exist=True, divide_by='file_name')
+    # await parse_xml(xml_files_path="../data/XML/", save_result_to="../data/PPARSED_XML/", test_mode=False, asynchronously=True, skip_exist=True, divide_by='category')
+    await parse_xml(xml_files_path="D:/DataSets/PM2/XML/", save_result_to="D:/DataSets/PM2/Images/", test_mode=False, asynchronously=True, skip_exist=True, divide_by='category')
 
 # ##### For Jupyter, we already have a loop, so we can just await the fucntion:
 # await download_image(url="", save_path="")
