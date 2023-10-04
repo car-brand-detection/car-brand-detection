@@ -8,29 +8,18 @@ import numpy as np
 import aiohttp
 import cv2
 from fastapi import APIRouter, HTTPException, UploadFile, File, Request, Header, Form, Response
-from pydantic import BaseModel
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel, Json
 
-class Item(BaseModel):
-    label: str
+class ClassifierResponse(BaseModel):
+    success: bool = True
+    data: t.List[str,] = ['model1','model2']
+    duration: float = 0.0
 
-# from fastapi.responses import StreamingResponse, Response, JSONResponse
-
-
-from aiohttp import MultipartReader
-import torch
 
 # from server_models import detect_cars_on_frame
 from server_models.car_model_classifier import predict_car_model
-from server_models.car_detector import detect_cars_on_frame
 from utils import extract_car, get_batch_of_images
-
-
-
-import psutil
-import torch.cuda
-
-process = psutil.Process(os.getpid())
-
 
 router = APIRouter()
 
@@ -53,10 +42,15 @@ json_data_description = """Координаты автомобилей на ка
 async def recognize_cars_on_frame(
         json_data: str = Form(..., description=json_data_description),
         file: UploadFile = File(..., description=file_description)
-) -> t.List[Item]:
+) -> ClassifierResponse:
     """
-    Определение модели авто.
-    :return:
+    Определение модели авто на изображении.
+    Input:
+        1) оригинальный кадр с камеры (на котором автомобиль обнаружен);
+        2) боксы и маски всех обнаруженных автомобилей в формате JSON (данные от сегментатора).
+    Модель итеративно "приближает" каждый автомобиль на исходном кадре, и затем полученный батч
+    изображений отправляется в классификатор.
+    Output: предсказанные модели всех обнаруженных машин (в той же последовательности, в который были отправлены боксы).
     """
     dots = json.loads(json_data)['dots']
     try:
@@ -69,19 +63,26 @@ async def recognize_cars_on_frame(
         # Decode the NumPy array as an image (adjust the format as needed)
         image = cv2.imdecode(image, cv2.IMREAD_COLOR)
         cars = []
+        errors = []
         for i, car in enumerate(dots):
             box, points = car['box'], car['points']
-            box, points = np.array(box).astype(np.int32), np.array(points).astype(np.int32)
-            car: np.ndarray = extract_car(image, bbox=box, points=points)
-            cars.append(car)
+            if box and points: # Not empty lists
+                box, points = np.array(box).astype(np.int32), np.array(points).astype(np.int32)
+                car: np.ndarray = extract_car(image, bbox=box, points=points)
+                cars.append(car)
+            else:
+                errors.append(i)
 
         cars = get_batch_of_images(cars)
-        labels = predict_car_model(cars)
-        return {
+        labels: list = predict_car_model(cars)  # Inference on batch
+
+        [labels.insert(i, "Unknown") for i in errors]
+        return JSONResponse(content={
             "success": True,
             "data": labels,
             "duration": time.time() - start_time,
         }
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail={
             "success": False,
