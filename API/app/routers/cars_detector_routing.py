@@ -87,19 +87,17 @@ async def detect_cars(
         })
 
 
-# from utils import extract_car, get_batch_of_images
-
 @router.post("/api/extract-cars")
 async def extract_cars(
-        file: UploadFile = File(..., description= """ файл"""),
-        json_data: str = Form(..., description=""" Описание JSON"""),
+        file: UploadFile = File(..., description=file_4_exctractor_description),
+        json_data: str = Form(..., description=json_data_description),
 ) -> SegmentatorResponse:
     """
     Детекция автомобилей на изображении.
     Input:
         1) кадр с камеры;
         2) боксы всех обнаруженных автомобилей в формате JSON (данные от детектора).
-    Output: боксы всех обнаруженных машин.
+    Output: боксы и маски всех обнаруженных машин.
     """
 
     dots = json.loads(json_data)['dots']
@@ -114,7 +112,6 @@ async def extract_cars(
         image = cv2.imdecode(image, cv2.IMREAD_COLOR)
         cars: t.List[t.Dict] = []
         shifts: t.List[t.Tuple[int, int]] = []
-        # original_cars = detect_cars_on_frame(image)
 
 
         for i, car in enumerate(dots):
@@ -125,19 +122,6 @@ async def extract_cars(
             cars.append(image[y:y2, x:x2])
 
         cars: t.Dict[str, t.List] = segment_cars_on_batch(cars, box_shifts=shifts)
-
-        #
-        # for i, car in enumerate(dots):
-        #     box = car['box']
-        #     box = np.array(box).astype(np.int32)
-        #     (x, y, x2, y2) = box
-        #     # 435 - 549 + 115 = 0
-        #     car: t.Dict = segment_cars_on_frame(image[y:y2, x:x2], shift_by=[x, y])
-        #
-        #     if car:
-        #         cars.append(car[0])
-        #     else:
-        #         cars.append({"box": [], "points": []})
 
         return JSONResponse(content={
             "success": True,

@@ -52,7 +52,7 @@ class YOLOModel:
 
         results = self.model.predict(
             source=img, save=False, save_txt=False, device=self.device, verbose=False, imgsz=self.size,
-            conf=0.25  # Default confidence is 0.25. We need more so that we will skip various trimmed machines that we don't expect to get
+            conf=0.25  # Default confidence is 0.25.
         )
         if results is None:
             return [], [], [], []
@@ -81,13 +81,13 @@ class YOLOModel:
             source=batch, save=False, save_txt=False, device=self.device, verbose=False, imgsz=self.size,
             conf=0.25  # Default confidence is 0.25. We need more so that we will skip various trimmed machines that we don't expect to get
         )
-        if results is None:
-            return [], [], [], []
 
         answer_data: t.Dict[str, t.List] = {
             "bboxes": [],
             "points": []
         }
+        if results is None:
+            return answer_data
 
         for result in results:
             i = 0
@@ -102,27 +102,12 @@ class YOLOModel:
                 segment = np.array(seg, dtype=np.int32)
                 answer_data['points'].append(segment)
 
-                bboxes = np.squeeze(np.array(result.boxes.xyxy.to('cpu'), dtype="int"))
+                bboxes = np.array(result.boxes.xyxy[0].to('cpu'), dtype="int")
                 answer_data['bboxes'].append(bboxes)
             else:
                 # Empty
                 answer_data['points'].append(None)
                 answer_data['bboxes'].append(None)
-
-
-
-
-                #
-                # for seg in result.masks.xyn:
-                #     print("I: ", i)
-                #     i += 1
-                #     seg[:, 0] *= width
-                #     seg[:, 1] *= height
-                #     segment = np.array(seg, dtype=np.int32)
-                #     answer_data['points'].append(segment)
-                #
-                #     bboxes = np.array(result.boxes.xyxy.to('cpu'), dtype="int")
-                #     answer_data['bboxes'].append(bboxes)
 
         return answer_data
 
@@ -283,17 +268,23 @@ def segment_cars_on_batch(images: t.List[np.ndarray],
     :param box_shifts: If we pass cropped image we have to shift our points, so they will match the original picture
     :return:
     """
+    assert len(box_shifts) == len(images)
 
     data = segmentator.segment_on_batch(images)
     bboxes, segments = data["bboxes"], data["points"]
-
     dots = []
+    if not bboxes and not segments:
+        return [{
+            "box": [],
+            "points": []
+        }] * len(bboxes)
+
+
     for bbox, points, shift in zip(bboxes, segments, box_shifts):  # dtype of bbox and segmentations is np.int32
         # x, y = shift_by
         x, y = shift
         if bbox is not None and points is not None:
             points = points + np.array(shift)
-
             bbox[0] += x  # Shift
             bbox[1] += y
             bbox[2] += x

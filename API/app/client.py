@@ -62,37 +62,6 @@ async def send_request_to_classifier(image: np.ndarray,
                       )
 
 
-
-
-
-async def send_batch_to_classifier(images: t.List[np.ndarray],
-                                     json_data: dict,
-                                     url = "http://localhost:9029/api/get-car-model"
-                                     ):
-    async with aiohttp.ClientSession() as session:
-        # Prepare the POST request with the image data
-
-        data = aiohttp.FormData()
-
-        for i, image in enumerate(images):
-            _, encoded_image = cv2.imencode(".jpg", image)
-            image_bytes = encoded_image.tobytes()
-            data.add_field("file", image_bytes, filename=f"image_{i}.jpg", content_type="image/jpeg")
-
-        data.add_field('json_data', json.dumps(json_data), content_type='application/json')
-
-        async with session.post(url, data=data) as response:
-            response_json = await response.json()
-            if response.status == 200:
-                return response_json
-            else:
-                error = response_json['detail']
-                print(f"Failed to send POST request. Status code: {response.status}. Error message: {error}")
-                return
-
-
-
-
 async def send_request_to_detector(image: np.ndarray,
                        url = "http://localhost:9029/api/detect-cars"
                        ):
@@ -144,7 +113,7 @@ async def send_request_to_segmentator(image: np.ndarray,
                 return answer
             else:
                 error = answer['detail']
-                logger.log(level=4, msg=f"ERROR: {error}")
+                logger.error(msg=f"ERROR: {error}")
                 return None
 
 
@@ -184,7 +153,7 @@ async def stream_video(video_path: os.path, total=100, request_to_url: str = "ht
             image=frame, json_data={"dots": cars},
             url=f"{request_to_url}:9029/api/extract-cars"
         )
-
+        # continue
 
         if segmentator_answer is not None:
             cars: list = segmentator_answer['data']
@@ -206,7 +175,7 @@ async def stream_video(video_path: os.path, total=100, request_to_url: str = "ht
             if car is None:
                 continue
             await show_frame(car, windom_name='CAR {}'.format(i_file))
-        # await asyncio.sleep(1)
+        await asyncio.sleep(1)
 
     cap.release()
     cv2.destroyAllWindows()
